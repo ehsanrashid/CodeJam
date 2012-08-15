@@ -75,11 +75,10 @@ ushort CycleLength(uint n)
 
     int nn = n;
     int maxCycleLength = 1;
-    bool done = false;
 
     ull queue[512]; // 524
     uint q_size = 0;
-    while (nn != 1)
+    while (nn >= SIZE || tableCycleLength[nn] == 0)
     {
         nn = NextNum(nn);
 
@@ -87,10 +86,7 @@ ushort CycleLength(uint n)
         {
             queue[q_size++] = nn;
             if (tableCycleLength[nn] != 0)
-            {
-                done = true;
                 break;
-            }
         } 
         else
         { 
@@ -100,7 +96,7 @@ ushort CycleLength(uint n)
         ++maxCycleLength;
     }
 
-    tableCycleLength[n] = (done ? tableCycleLength[nn] : 0) + maxCycleLength;
+    tableCycleLength[n] = tableCycleLength[nn] + maxCycleLength;
 
     for (uint x = 0; x < q_size; ++x)
     {
