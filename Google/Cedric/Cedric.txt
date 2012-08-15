@@ -1,0 +1,27 @@
+Cedric
+======
+
+Problem
+-------
+Here is an interesting coding challenge:
+You have numbers from 1 to max, count those numbers whose digits don’t repeat.
+
+For example, part of the output would be:
+
+    * 8, 9, 10, 12 (11 is not valid)
+    * 98, 102, 103 (99, 100 and 101 are not valid)
+    * 5432, 5436, 5437 (5433, 5434 and 5435 are not valid)
+
+Also:
+
+    * Display the biggest jump (in the sequences above, it’s 4: 98 -> 102)
+    * Display the total count of numbers
+    * Give these two values for max=10000
+
+
+
+Giving the following output (for 1 – MaxIn, as compared to 1-10,000 in the original challenge)
+
+Count: 5611770
+Gap: 10469135
+Time: 00:00:02.8350765
