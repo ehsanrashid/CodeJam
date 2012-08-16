@@ -1,6 +1,7 @@
 // 00108 - Maximum Sum
-#include <CSTDIO>
-#include <ALGORITHM>
+
+#include <stdio.h>
+#include <algorithm>
 
 using namespace std;
 

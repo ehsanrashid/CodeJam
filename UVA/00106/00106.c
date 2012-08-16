@@ -1,12 +1,15 @@
 // 00106 - Fermat vs. Pythagoras
-#include <CSTDIO>
-#include <CSTRING>
-#include <VECTOR>
 
-#include <ALGORITHM>
+#include <stdio.h>
+#include <string.h>
+#include <vector>
+
+#include <algorithm>
+
+using namespace std;
 
 #define LIM 1000050
-using namespace std;
+
 typedef unsigned int uint;
 
 struct Triple
@@ -72,7 +75,7 @@ void main()
         }
     }
 
-    std::sort(prim.begin(), prim.end(), ord);
+    sort(prim.begin(), prim.end(), ord);
     while (scanf("%u",&n) != EOF)
     {
         didnt = n;

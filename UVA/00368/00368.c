@@ -1,6 +1,6 @@
 // 00386 - Perfect Cubes
 
-#include <cstdio>
+#include <stdio.h>
 
 void main()
 {

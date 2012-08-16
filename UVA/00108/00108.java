@@ -7,7 +7,7 @@ public class MaxBlockSum
         Scanner in = new Scanner(System.in);
         while (in.hasNext()) 
         {
-	    int N = in.nextInt();
+ 	        int N = in.nextInt();
             int[][] arr = new int[N + 1][N + 1];
             for (int i = 1; i <= N; i++)
                 for (int j = 0; j < N; j++)

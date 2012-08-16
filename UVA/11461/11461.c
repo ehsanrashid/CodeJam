@@ -1,6 +1,6 @@
 // 11461 - Square Numbers
 
-#include <CSTDIO>
+#include <stdio.h>
 
 #define MAX 318
 int squares[MAX];

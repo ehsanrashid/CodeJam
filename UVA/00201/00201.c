@@ -1,7 +1,7 @@
 // Squares
 
-#include <cstdio>
-#include <cstring>
+#include <stdio.h>
+#include <string.h>
 
 const int NN = 10;
 int hd[NN][NN], ss[NN], vd[NN][NN];
