@@ -9,19 +9,19 @@ class stack
 
 public:
 
-    void push(int n){ data[top++]=n; }
+    void push(int n) { data[top++] = n; }
 
-    int pop(){ return (top>0)?data[--top]:-1; }
+    int pop() { return (top > 0) ? data[--top] : -1; }
 
-    void clear(){ top=0; }
+    void clear() { top = 0; }
 
-    stack(){ top=0; }
+    stack() { top = 0; }
 
     void show()
     {
-        if(top==0) return;
+        if (top == 0) return;
         int i;
-        for(i=0;i<top;i++)
+        for (i=0; i < top; ++i)
         {
             cout<<" "<<data[i];
         }
@@ -34,10 +34,10 @@ int position[25];
 void clear(int n)
 {
     int i;
-    while(1)
+    while (true)
     {
         i=box[position[n]].pop();
-        if(i==n)
+        if (i==n)
         {
             box[position[n]].push(i);
             return;
@@ -59,7 +59,8 @@ void move(int a, int b)
     {
         i=box[position[a]].pop();
         tmp.push(i);
-    }while(i!=a);
+    }
+    while (i != a);
 
     i=tmp.pop();
     while(i!=-1)

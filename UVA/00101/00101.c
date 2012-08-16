@@ -30,6 +30,7 @@ template<class T> string toString(T val)
 }
 
 int numOfBlocks;
+
 stack<int>* pileOfBlocks;
 int* posOfBlock;
 

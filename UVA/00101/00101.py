@@ -1,4 +1,5 @@
 #Regular expression module so regexs can be used as a poor mans tokenizer for the input statements.
+
 import re
 
 #Blocks class defines the initial setup and layout of the stacks of blocks, performs the execution of commands, and pretty printing of the current state of the stacks.

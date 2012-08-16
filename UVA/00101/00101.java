@@ -4,17 +4,20 @@ import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Main 
+{
 	Stack<Integer>[] blocks;
 	int[] pos;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException 
+	{
 		Main p = new Main();
 		p.go();
 		p.print();
 	}
 
-	private void print() {
+	private void print() 
+	{
 		for(int i=0; i<blocks.length; i++){
 			System.out.println(blockToString(i));
 		}
