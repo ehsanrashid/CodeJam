@@ -1,7 +1,7 @@
 // 00100 - The 3n+1 problem (Max Cycle Length)
 
 #include <stdio.h>
-#include <algorithm>
+#include <queue>
 
 using namespace std;
 
@@ -11,7 +11,7 @@ typedef unsigned long long   ull;
 
 const uint SIZE = 1000001;
 
-ushort tableCycleLength[SIZE];
+ushort CycleLengths[SIZE];
 
 uint NextNum(uint n)
 {
@@ -23,7 +23,6 @@ uint NextNum(uint n)
             ? n>>1 : 3*n +1;
 }
 
-
 ushort CycleLength(uint n)
 {
     // Note: 0 treated as odd=> 0: 3*(0) + 1 => 1
@@ -32,128 +31,74 @@ ushort CycleLength(uint n)
     // base case :
     // 0 has a cycle length of 2
     // 1 has a cycle length of 1
-    if (tableCycleLength[n] == 0)
+    if (CycleLengths[n] == 0)
     {
-        if (n == 0) tableCycleLength[n] = 2;
-        if (n == 1) tableCycleLength[n] = 1;
-        //if (n == 2) tableCycleLength[n] = 2;
+        if (n == 0) CycleLengths[n] = 2;
+        if (n == 1) CycleLengths[n] = 1;
+        //if (n == 2) CycleLengths[n] = 2;
     }
     if (n < SIZE)
     {
         // if we've already cached the cycle length of the current number
-        if (tableCycleLength[n] != 0) return tableCycleLength[n];
+        if (CycleLengths[n] != 0) return CycleLengths[n];
     }
 
     // --------------------------------------------------
-    //int nn = n;
-    //ushort numberOfCycles = 0;
-    //if (tableCycleLength[n] == 0)
-    //{
-    //    while (nn != 1)
-    //    {
-    //        if (tableCycleLength[nn] != 0)
-    //        {
-    //            numberOfCycles = tableCycleLength[nn] + numberOfCycles;
-    //            nn = 1;
-    //        }
-    //        else
-    //        {
-    //            nn = NextNum(nn);
-    //            numberOfCycles++;
-    //        }
-    //    }
-    //}
-    //else
-    //{
-    //    numberOfCycles = tableCycleLength[nn] + numberOfCycles;
-    //    nn = 1;
-    //}
 
-    //tableCycleLength[n] = numberOfCycles;
-
-    // --------------------------------------------------
-
-    int nn = n;
-    int maxCycleLength = 1;
-
-    ull queue[512]; // 524
-    uint q_size = 0;
-    while (nn >= SIZE || tableCycleLength[nn] == 0)
+    uint nn = n;
+    queue<uint> numChain;
+    do
     {
         nn = NextNum(nn);
-
-        if (nn < SIZE)
-        {
-            queue[q_size++] = nn;
-            if (tableCycleLength[nn] != 0)
-                break;
-        } 
-        else
-        { 
-            queue[q_size++] = 0;
-        }
-
-        ++maxCycleLength;
+        numChain.push((nn < SIZE) ? nn : 0);
     }
+    while ((nn >= SIZE) || (CycleLengths[nn] == 0));
 
-    tableCycleLength[n] = tableCycleLength[nn] + maxCycleLength;
+    ushort cyclelength = numChain.size();
+    CycleLengths[n] = CycleLengths[nn] + cyclelength;
 
-    for (uint x = 0; x < q_size; ++x)
+    while (cyclelength > 1)
     {
-        ushort& value = tableCycleLength[queue[x]];
-        if (value == 0) value = tableCycleLength[n] - (x + 1);
+        uint num = numChain.front(); numChain.pop();
+        --cyclelength; // = numChain.size();
+        CycleLengths[num] = CycleLengths[nn] + cyclelength;
     }
+
     // --------------------------------------------------
-
-    //// the cycle length of the current number is 1 greater than the cycle length of the next number
-    //int cyclelength = 1 + CycleLengthR(NextNum(n));
-
-    //// cache the result if the current number is not too big
-    //if (n < SIZE)
-    //{
-    //    tableCycleLength[n] = cyclelength;
-    //}
-
     // --------------------------------------------------
     
-    //if (n < SIZE) 
+    // general case:
+    //uint nn = NextNum(n);
+    //ushort cyclelength = 1 + CycleLength(nn);
+    // --------------------------------------------------
+    //// specific case: not work if NextNum changed
+    //uint nn = NextNum(n);
+    //ushort cyclelength;
+    //if ((n&1) == 1)
     //{
-    //    int nn;
-    //    if ((n&1) == 0)
-    //    {
-    //        nn = NextNum(n);
-    //    }
-    //    else
-    //    {
-    //        nn = NextNum(n) >> 1;
-    //        tableCycleLength[n] = 1; 
-    //    }
-    //    tableCycleLength[n] += 1 + CycleLength(nn);
+    //    nn >>= 1;
+    //    cyclelength = 2 + CycleLength(nn);
     //}
     //else
     //{
-    //    int num_OE = 0;
-    //    if ((n&1) == 0)
-    //    {
-    //        n = NextNum(n);
-    //    }
-    //    else
-    //    {
-    //        // calc two steps at one
-    //        n = NextNum(n) >> 1;
-    //        num_OE = 1;
-    //    }
-    //    return num_OE + 1 + CycleLength(n);
+    //    cyclelength = 1 + CycleLength(nn);
     //}
     // --------------------------------------------------
+
+    //if (n < SIZE)
+    //{
+    //    CycleLengths[n] = cyclelength;
+    //}
+    // --------------------------------------------------
+    // --------------------------------------------------
     
-    return tableCycleLength[n];
+    return CycleLengths[n];
 }
 
 ushort MaxCycleLength(uint lowerBound, uint upperBound)
 {
     ushort maxCycleLength = 0;
-    for (int num = lowerBound; num <= upperBound; ++num)
+    for (uint num = lowerBound; num <= upperBound; ++num)
     {
         maxCycleLength = max(CycleLength(num), maxCycleLength);
     }
@@ -168,8 +113,8 @@ void main()
         freopen("00100.out", "w", stdout);
 
         // initalize table
-        tableCycleLength[0] = 2;
-        tableCycleLength[1] = 1;
+        CycleLengths[0] = 2;
+        CycleLengths[1] = 1;
 
         uint i, j;
         while (scanf("%u %u", &i, &j) == 2) // != EOF
