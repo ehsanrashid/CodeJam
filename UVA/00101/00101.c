@@ -3,12 +3,19 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include <ctype.h>
+#include <iostream>
 #include <sstream>
 #include <stack>
+#include <algorithm>
 
 using namespace std;
 
-const int MAX_BUFFER = 1024;
+typedef unsigned short       ushort;
+typedef unsigned int         uint;
+typedef unsigned long long   ull;
+
+const uint MAX_BUFFER = 1024;
 string Format(const char *fmt, ...)
 {
     char formatStr[MAX_BUFFER*5] = {'\0'};
@@ -29,27 +36,31 @@ template<class T> string toString(T val)
     return ss.str();
 }
 
-int numOfBlocks;
+void Transform(string& str, int (*Func)(int))
+{
+    transform(str.begin(), str.end(), str.begin(), Func); 
+}
 
-stack<int>* pileOfBlocks;
-int* posOfBlock;
+uint numOfBlocks;
+stack<uint>* pileOfBlocks;
+uint* posOfBlock;
 
-void EmptyStack(stack<int>& stk)
+void EmptyStack(stack<uint>& stk)
 {
     while (!stk.empty()) stk.pop();
 }
 
 void ShowTable()
 {
-    for (int i = 0; i < numOfBlocks; i++)
+    for (uint i = 0; i < numOfBlocks; i++)
     {
         string strPile = "";
         if (!pileOfBlocks[i].empty())
         {
-            stack<int> pile = pileOfBlocks[i];
+            stack<uint> pile = pileOfBlocks[i];
             while (!pile.empty())
             {
-                int top = pile.top();
+                uint top = pile.top();
                 pile.pop();
                 //strPile = Format("%d %s", top, strPile.c_str());
                 strPile.insert(0, toString(top) + " ");
@@ -80,7 +91,7 @@ void ClearAbove(int x)
     }
 }
 
-void MoveOver(int b1, int b2) 
+void MoveOver(uint b1, uint b2) 
 {
     ClearAbove(b1);
     pileOfBlocks[posOfBlock[b2]].push(pileOfBlocks[posOfBlock[b1]].top());
@@ -88,15 +99,15 @@ void MoveOver(int b1, int b2)
     posOfBlock[b1] = posOfBlock[b2];
 }
 
-void MoveOnto(int b1, int b2) 
+void MoveOnto(uint b1, uint b2) 
 {
     ClearAbove(b2);
     MoveOver(b1, b2);
 }
 
-void PileOver(int b1, int b2) 
+void PileOver(uint b1, uint b2) 
 {
-    stack<int> pile = stack<int>();
+    stack<int> pile;
     while (pileOfBlocks[posOfBlock[b1]].top() != b1)
     {
         pile.push(pileOfBlocks[posOfBlock[b1]].top());
@@ -115,17 +126,17 @@ void PileOver(int b1, int b2)
     }
 }
 
-void PileOnto(int b1, int b2) 
+void PileOnto(uint b1, uint b2) 
 {
     ClearAbove(b2);
     PileOver(b1, b2);
 }
 
-void move_onto(int b1, int b2) 
+void move_onto(uint b1, uint b2) 
 { 
     while (pileOfBlocks[posOfBlock[b1]].top() != b1) 
     { 
-        int top = pileOfBlocks[posOfBlock[b1]].top(); 
+        uint top = pileOfBlocks[posOfBlock[b1]].top(); 
         pileOfBlocks[top].push(top); 
         posOfBlock[top] = top; 
         pileOfBlocks[posOfBlock[b1]].pop(); 
@@ -133,7 +144,7 @@ void move_onto(int b1, int b2)
 
     while (pileOfBlocks[posOfBlock[b2]].top() != b2) 
     { 
-        int top = pileOfBlocks[posOfBlock[b2]].top(); 
+        uint top = pileOfBlocks[posOfBlock[b2]].top(); 
         pileOfBlocks[top].push(top); 
         posOfBlock[top] = top; 
         pileOfBlocks[posOfBlock[b2]].pop(); 
@@ -148,11 +159,11 @@ void move_onto(int b1, int b2)
     posOfBlock[b1] = b2; 
 } 
 
-void move_over(int b1, int b2) 
+void move_over(uint b1, uint b2) 
 { 
     while (pileOfBlocks[posOfBlock[b1]].top() != b1) 
     { 
-        int top = pileOfBlocks[posOfBlock[b1]].top(); 
+        uint top = pileOfBlocks[posOfBlock[b1]].top(); 
         pileOfBlocks[top].push(top); 
         posOfBlock[top] = top; 
         pileOfBlocks[posOfBlock[b1]].pop(); 
@@ -163,13 +174,12 @@ void move_over(int b1, int b2)
     posOfBlock[b1] = posOfBlock[b2]; 
 } 
 
-stack<int> pile;
-
-void pile_onto(int b1, int b2) 
-{ 
+void pile_onto(uint b1, uint b2) 
+{
+    stack<uint> pile;
     while (pileOfBlocks[posOfBlock[b2]].top() != b2) 
     { 
-        int top = pileOfBlocks[posOfBlock[b2]].top(); 
+        uint top = pileOfBlocks[posOfBlock[b2]].top(); 
         pileOfBlocks[top].push(top); 
         posOfBlock[top] = top; 
         pileOfBlocks[posOfBlock[b2]].pop(); 
@@ -196,8 +206,9 @@ void pile_onto(int b1, int b2)
     } 
 } 
 
-void pile_over(int b1, int b2) 
+void pile_over(uint b1, uint b2) 
 { 
+    stack<uint> pile;
     while (pileOfBlocks[posOfBlock[b1]].top() != b1) 
     { 
         pile.push(pileOfBlocks[posOfBlock[b1]].top()); 
@@ -227,11 +238,11 @@ void main()
 
         //for (int i = 1; i <= N; ++i)
         {
-            scanf(" %d", &numOfBlocks);
+            scanf(" %u", &numOfBlocks);
 
-            pileOfBlocks = new stack<int>[numOfBlocks];
-            posOfBlock = new int[numOfBlocks];
-            for (int n = 0; n < numOfBlocks; ++n)
+            pileOfBlocks = new stack<uint>[numOfBlocks];
+            posOfBlock = new uint[numOfBlocks];
+            for (uint n = 0; n < numOfBlocks; ++n)
             {
                 pileOfBlocks[n].push(n);
                 posOfBlock[n] = n;
@@ -239,43 +250,88 @@ void main()
 
             while (true)
             {
-                char cmd[5];
-                scanf(" %s", &cmd);
-                if (strcmp(cmd, "quit") == 0) 
-                    break;		
-
-                int b1, b2;
-                char mode[5];
-                scanf(" %d %s %d", &b1, &mode, &b2);
+                // ------------------------------------------
+                string cmd;
+                cin >> cmd;
+                Transform(cmd, ::tolower);
+                if (cmd == "quit")
+                    break;
+                
+                uint b1, b2;
+                string mode;
+                cin >> b1 >> mode >> b2;
 
                 if (b1 == b2 || posOfBlock[b1] == posOfBlock[b2]) continue;
+                Transform(mode, ::tolower);
 
-                if (strcmp(cmd, "move") == 0)
+                if (cmd == "move")
                 {
-                    if (strcmp(mode, "onto") == 0) 
+                    if (mode == "onto") 
                     {
-                        //MoveOnto(b1, b2);
-                        move_onto(b1, b2);
+                        MoveOnto(b1, b2);
+                        //move_onto(b1, b2);
                     }
-                    else if (strcmp(mode, "over") == 0)
+                    else if (mode == "over")
                     {
-                        //MoveOver(b1, b2);
-                        move_over(b1, b2);
+                        MoveOver(b1, b2);
+                        //move_over(b1, b2);
                     }
                 }
-                else if (strcmp(cmd, "pile") == 0)
+                else if (cmd == "pile")
                 {
-                    if (strcmp(mode, "onto") == 0)
+                    if (mode == "onto")
                     {
-                        //PileOnto(b1, b2);
-                        pile_onto(b1, b2);
+                        PileOnto(b1, b2);
+                        //pile_onto(b1, b2);
                     }
-                    else if (strcmp(mode, "over") == 0)
+                    else if (mode == "over")
                     {
-                        //PileOver(b1, b2);
-                        pile_over(b1, b2);
+                        PileOver(b1, b2);
+                        //pile_over(b1, b2);
                     }
                 }
+
+                // ------------------------------------------
+                
+                //char cmd[5];
+                //scanf(" %s", &cmd);
+                //if (stricmp(cmd, "quit") == 0) 
+                //    break;		
+
+                //uint b1, b2;
+                //char mode[5];
+                //scanf(" %u %s %u", &b1, &mode, &b2);
+
+                //if (b1 == b2 || posOfBlock[b1] == posOfBlock[b2]) continue;
+
+                //if (stricmp(cmd, "move") == 0)
+                //{
+                //    if (stricmp(mode, "onto") == 0) 
+                //    {
+                //        MoveOnto(b1, b2);
+                //        //move_onto(b1, b2);
+                //    }
+                //    else if (stricmp(mode, "over") == 0)
+                //    {
+                //        MoveOver(b1, b2);
+                //        //move_over(b1, b2);
+                //    }
+                //}
+                //else if (stricmp(cmd, "pile") == 0)
+                //{
+                //    if (stricmp(mode, "onto") == 0)
+                //    {
+                //        PileOnto(b1, b2);
+                //        //pile_onto(b1, b2);
+                //    }
+                //    else if (stricmp(mode, "over") == 0)
+                //    {
+                //        PileOver(b1, b2);
+                //        //pile_over(b1, b2);
+                //    }
+                //}
+                //
+                // ------------------------------------------
             }
             ShowTable();
         }
