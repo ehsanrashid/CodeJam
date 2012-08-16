@@ -3,6 +3,7 @@ from math import *
 #Result is 2 * 3 * 2 * 5 * 7 * 2 * 3 * 11 * 13 * 2 * 17 * 19 = 232792560
 
 def SmallestDivisible(k):
+
     # ----------------------
 ##    i = k
 ##    while (True):
@@ -15,10 +16,12 @@ def SmallestDivisible(k):
 ##        if (ok):
 ##            num = i
 ##            break
+
     # ----------------------
 ##    num = k
 ##    while not delbart(num, k):
 ##        num += k
+
     # ----------------------
 ##    num = 1
 ##    for k in range(1, k+1):
@@ -28,11 +31,13 @@ def SmallestDivisible(k):
 ##                    num *= j
 ##                    break
     # ----------------------
+
 ##    for k in range(1, k+1):
 ##        num = (num*k) // GCD(num, k)
     #-----
 ##    num = LCMM(*range(1, k+1))
     # ----------------------
+
 ##    num = 1
 ##    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
 ##    

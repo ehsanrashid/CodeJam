@@ -81,10 +81,12 @@ def EvenSeq(seq):
             yield n
 
 ## ----------------------------------
+
 cache = {}
 def fib(n):
     cache[n] = cache.get(n, 0) or (n <= 1 and 1 or fib(n-1) + fib(n-2))
     return cache[n]
+
 ## ----------------------------------
 ##import numpy
 ##def nFibo(limit):

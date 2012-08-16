@@ -71,7 +71,9 @@ def Primes(min, max):
             if (n >= min):
                 yield n
 
+
 import operator
+
 def lrange(num1, num2 = None, step = 1):
     op = operator.__lt__
 

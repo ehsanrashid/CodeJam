@@ -57,10 +57,11 @@ def SumK(k):
 ##    return SumAP_k(1, k, k)
     return SumAP_d(1, k, 1)
 
-beg = 1
-end = 1000
-n1 = 3
-n2 = 5
-print SumMultiplesK1K2(beg, end, n1, n2)
-##n = [7, 11, 13]
-##print [x for x in MultiplesKn(beg, end, n)]
+if (__name__ == "__main__"):
+    beg = 1
+    end = 1000
+    n1 = 3
+    n2 = 5
+    print SumMultiplesK1K2(beg, end, n1, n2)
+    ##n = [7, 11, 13]
+    ##print [x for x in MultiplesKn(beg, end, n)]

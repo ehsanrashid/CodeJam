@@ -1,16 +1,8 @@
-#include <STDIO.H>
+#include <stdio.h>
 
-
-int SumMultiplesK1K2(int beg, int end, int n1, int n2)
+int SumAP(int a, int l, int n) 
 {
-    //int sum = 0;
-    //for (int x = beg; x < end; ++x)
-    //    if ((x%n1 == 0) || (x%n2 == 0))
-    //        sum += x;
-    //return sum;
-    // -----------------------------
-    return SumMultiplesK(beg, end, n1) + SumMultiplesK(beg, end, n2) - SumMultiplesK(beg, end, n1*n2);
-    // -----------------------------
+    return n*(l + a)/2;
 }
 
 int SumMultiplesK(int beg, int end, int n)
@@ -21,9 +13,20 @@ int SumMultiplesK(int beg, int end, int n)
     return SumAP(a, l, k);
 }
 
-int SumAP(int a, int l, int k) 
+
+int SumMultiplesK1K2(int beg, int end, int n1, int n2)
 {
-    return k*(l + a)/2;
+    // -----------------------------
+    //int sum = 0;
+    //for (int x = beg; x < end; ++x)
+    //    if ((x%n1 == 0) || (x%n2 == 0))
+    //        sum += x;
+    //return sum;
+
+    // -----------------------------
+
+    return SumMultiplesK(beg, end, n1) + SumMultiplesK(beg, end, n2) - SumMultiplesK(beg, end, n1*n2);
+    // -----------------------------
 }
 
 void main()

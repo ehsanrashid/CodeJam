@@ -12,13 +12,16 @@ def PrimeFactors(n):
     if (n%x == 0):
         yield x
     # -----------------------
+
 ##    for p in Primes(2, n):
 ##        if (n%p == 0):
 ##            n /= p
 ##            yield p
 ##        if (n == 1):
 ##            break
+
     # -----------------------
+
 ##    for p in Sieve(n):
 ##        if (n%p == 0):
 ##            yield p

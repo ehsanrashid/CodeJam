@@ -1,5 +1,6 @@
 from math import sqrt
 
+
 def IsPrime(num):
     num = int(abs(num))
     if (num <= 1): return False

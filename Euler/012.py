@@ -2,7 +2,6 @@
 import math
 import operator
 
-
 def euler12(ndivisors):
     """What is the first triangle number to have over five-hundred divisors?"""
     num_factors = lambda x: mul((exp+1) for (base, exp) in factorize(x))
@@ -23,6 +22,7 @@ def triangle_numbers(start=1):
     return reduce(operator.add, count(start), first)
 
 def head(items): return items[0]
+
 def tail(items): return items[1:]
 
 def count(items):
