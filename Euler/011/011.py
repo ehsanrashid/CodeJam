@@ -16,6 +16,4 @@ def euler11(strmatrix, op, length):
     groups = flatten(starmap(gg, icross(xrange(sx), xrange(sy))))
     return max(map(lambda it: reduce(op, it), groups))
  
-
-
 euler11(data.problem11, operator.mul, 4)

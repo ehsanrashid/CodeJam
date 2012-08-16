@@ -13,7 +13,6 @@ def LargestPalindrome(beg, end):
 ##                    d1max, d2max = d1, d2
 ##                    largest = prod
 ##    #print largest, d1max, d2max
-
     #----------------------------
 ##    largest = 0
 ##    common = 11
@@ -35,7 +34,6 @@ def LargestPalindrome(beg, end):
 ##            d2 -= dd2
 ##        d1 -= 1
 ##    #print largest, d1max, d2max
-
     #----------------------------
 ##    minN = beg**2
 ##    maxN = end**2
@@ -45,7 +43,6 @@ def LargestPalindrome(beg, end):
 ##                if (n%d == 0) and (n/d < end):
 ##                    #print d, n/d
 ##                    return n
-
     #----------------------------
 ##    digits = range(9, -1, -1)
 ##    for d1 in digits:
@@ -56,7 +53,6 @@ def LargestPalindrome(beg, end):
 ##                for d in xrange(990, beg-1, -11):
 ##                    if (n%d == 0) and (n/d < end):
 ##                        return n
-
     #----------------------------
     largest = max([d1*d2 for d1 in range(beg, end) for d2 in range(beg, end) if IsPalindrome(d1*d2)])
     #----------------------------

@@ -26,14 +26,12 @@ def IsPrime(num):
     limit = int(sqrt(num))
 
     # ------------------------
-
 ##    d = 3
 ##    while (d <= limit):
 ##        if (num%d == 0):
 ##            return False
 ##        d += 2
 ##    return True
-
     # ------------------------
     d = 5
     while (d <= limit):

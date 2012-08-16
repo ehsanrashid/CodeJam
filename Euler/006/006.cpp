@@ -1,4 +1,5 @@
-#include <stdio.h>
+#include <STDIO.H>
+
 
 int SquareOfSum(int k)
 {

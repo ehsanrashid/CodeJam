@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <string.h>
+#include <STDIO.H>
+#include <STRING.H>
 
 #define MAX 1000000
 
@@ -8,7 +8,7 @@ void main()
     bool p[MAX];
     //memset(p, 1, sizeof(p));
     memset(p, true, sizeof(p));    
-
+    
     int k = 1000;
     for (int i = 4; i < MAX; i += 2) 
     {
