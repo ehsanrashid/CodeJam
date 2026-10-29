@@ -652,18 +652,18 @@ auto build_scc_graph(
     }
 
     // Add edges between different SCCs.
-    for (const auto& [from, edges] : graph.adjacencies())
+    for (const auto& [src, edges] : graph.adjacencies())
     {
-        const usize fromSCC = componentOf.find(from)->second;
+        const usize srcSCC = componentOf.find(src)->second;
 
-        for (const auto& [to, weight] : edges)
+        for (const auto& [dst, weight] : edges)
         {
             (void) weight;
 
-            const usize toSCC = componentOf.find(to)->second;
+            const usize dstSCC = componentOf.find(dst)->second;
 
-            if (fromSCC != toSCC)
-                sccGraph.add_edge(fromSCC, toSCC);
+            if (srcSCC != dstSCC)
+                sccGraph.add_edge(srcSCC, dstSCC);
         }
     }
 
@@ -678,22 +678,23 @@ template<typename Point,
 auto find_reachable_sccs(const Point&                            startPoint,
                          const Graph<Vertex, Type, Weight, Map>& sccGraph,
                          const std::unordered_map<Point, usize>& componentOf) {
-    std::vector<bool>  visited(sccGraph.vertex_count(), false);
     std::vector<usize> reachable;
-    std::vector<usize> stack;
 
     const auto itr = componentOf.find(startPoint);
 
     if (itr == componentOf.end())
         return reachable;
 
-    stack.push_back(itr->second);
+    std::vector<bool> visited(sccGraph.vertex_count(), false);
+    std::stack<usize> stack;
+
+    stack.push(itr->second);
     visited[itr->second] = true;
 
     while (!stack.empty())
     {
-        const usize current = stack.back();
-        stack.pop_back();
+        const usize current = stack.top();
+        stack.pop();
 
         reachable.push_back(current);
 
@@ -705,7 +706,7 @@ auto find_reachable_sccs(const Point&                            startPoint,
                 if (!visited[next])
                 {
                     visited[next] = true;
-                    stack.push_back(next);
+                    stack.push(next);
                 }
             }
     }
@@ -754,14 +755,14 @@ auto find_source_sccs(const Graph<usize, GraphType::Directed, Weight, Map>& sccG
     std::vector<usize> incoming(count, 0);
     std::vector<usize> sources;
 
-    for (const auto& [from, edges] : sccGraph.adjacencies())
+    for (const auto& [src, edges] : sccGraph.adjacencies())
     {
-        (void) from;
+        (void) src;
 
-        for (const auto& [to, weight] : edges)
+        for (const auto& [dst, weight] : edges)
         {
             (void) weight;
-            ++incoming[to];
+            ++incoming[dst];
         }
     }
 
@@ -772,9 +773,9 @@ auto find_source_sccs(const Graph<usize, GraphType::Directed, Weight, Map>& sccG
     return sources;
 }
 
-void airport_connections(const std::vector<std::string>&           airports,
+void airport_connections(const std::vector<std::string>&                airports,
                          const std::vector<std::array<std::string, 2>>& routes,
-                         const std::string&                        startAirport) noexcept {
+                         const std::string&                             startAirport) noexcept {
     const usize n = airports.size();
     const usize m = routes.size();
 
@@ -963,6 +964,11 @@ int main() {
       {"SFO", "SAN"},  //
       {"SFO", "DSM"},  //
       {"SAN", "EYW"}   //
+      //{"LGA", "SFO"},  //
+      //{"LGA", "TLV"},  //
+      //{"LGA", "EWR"},  //
+      //{"BUD", "SFO"},  //
+      //{"DOH", "BUD"}   //
     };
 
     std::string startAirport = "LGA";
