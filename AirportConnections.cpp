@@ -868,7 +868,8 @@ void airport_connections(const std::vector<std::string>&                airports
         std::cout << "SCC " << i << " reaches: ";
 
         for (const usize scc : reachable[i])
-            std::cout << scc << " ";
+            if (scc != i)
+                std::cout << scc << " ";
 
         std::cout << "\n";
     }
@@ -963,7 +964,7 @@ int main() {
       {"LHR", "SFO"},  //
       {"SFO", "SAN"},  //
       {"SFO", "DSM"},  //
-      {"SAN", "EYW"}   //
+      {"SAN", "EYW"},  //
       //{"LGA", "SFO"},  //
       //{"LGA", "TLV"},  //
       //{"LGA", "EWR"},  //
@@ -1112,20 +1113,20 @@ SCC 2 ->
 SCC 1 -> SCC 2 SCC 4
 SCC 0 -> SCC 1
 
-SCC 0 reaches: 0 1 4 13 2
-SCC 1 reaches: 1 4 13 2
-SCC 2 reaches: 2
-SCC 3 reaches: 3 5 7 12 6
-SCC 4 reaches: 4 13
-SCC 5 reaches: 5 7 12 6
-SCC 6 reaches: 6 7 12
-SCC 7 reaches: 7 12
-SCC 8 reaches: 8 9 10 11 12
-SCC 9 reaches: 9 10 11 12
-SCC 10 reaches: 10 11 12
-SCC 11 reaches: 11 12
-SCC 12 reaches: 12
-SCC 13 reaches: 13
+SCC 0 reaches: 1 4 13 2
+SCC 1 reaches: 4 13 2
+SCC 2 reaches:
+SCC 3 reaches: 5 7 12 6
+SCC 4 reaches: 13
+SCC 5 reaches: 7 12 6
+SCC 6 reaches: 7 12
+SCC 7 reaches: 12
+SCC 8 reaches: 9 10 11 12
+SCC 9 reaches: 10 11 12
+SCC 10 reaches: 11 12
+SCC 11 reaches: 12
+SCC 12 reaches:
+SCC 13 reaches:
 
 Source SCCs: (3)
 SCC 0
